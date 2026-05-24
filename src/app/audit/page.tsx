@@ -168,12 +168,13 @@ export default function AuditPage() {
                 <p className="mt-4 text-lg text-zinc-600">
                   ${result.annualSavings}/year potential savings
                 </p>
-                <div className="mt-10 h-72 rounded-3xl border border-zinc-200 bg-white p-6">
+
+                <div className="mt-8 h-56 rounded-3xl border border-zinc-200 bg-white p-5">
                   <p className="text-xs uppercase tracking-[0.2em] text-zinc-500">
                     Spend Comparison
                   </p>
 
-                  <div className="mt-6 h-52">
+                  <div className="mt-4 h-40">
                     <ResponsiveContainer width="100%" height="100%">
                       <BarChart
                         data={[
@@ -190,7 +191,12 @@ export default function AuditPage() {
                         <XAxis dataKey="name" />
                         <YAxis />
                         <Tooltip />
-                        <Bar dataKey="value" radius={[12, 12, 0, 0]} />
+
+                        <Bar
+                          dataKey="value"
+                          fill="#6ee7b7"
+                          radius={[10, 10, 0, 0]}
+                        />
                       </BarChart>
                     </ResponsiveContainer>
                   </div>
@@ -215,12 +221,16 @@ export default function AuditPage() {
                 </div>
               </div>
 
-              <div className="rounded-3xl bg-black p-8 text-white">
-                <p className="text-xs uppercase tracking-[0.3em] text-zinc-400">
+              <div className="rounded-3xl border border-zinc-200 bg-zinc-100 p-8 shadow-sm">
+                <p className="text-xs uppercase tracking-[0.3em] text-zinc-500">
                   AI Summary
                 </p>
 
-                <p className="mt-6 text-lg leading-8 text-zinc-200">
+                <div className="mt-4 inline-flex rounded-full bg-emerald-100 px-3 py-1 text-xs font-medium text-emerald-700">
+                  AI Generated Insight
+                </div>
+
+                <p className="mt-4 text-base leading-8 text-zinc-700">
                   {summary}
                 </p>
               </div>
