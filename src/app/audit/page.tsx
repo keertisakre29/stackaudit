@@ -3,6 +3,15 @@
 import { useEffect, useState } from "react";
 import { generateAudit } from "@/lib/audit-engine";
 
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+
 const tools = ["Cursor", "ChatGPT", "Claude", "Gemini", "GitHub Copilot"];
 
 export default function AuditPage() {
@@ -15,6 +24,7 @@ export default function AuditPage() {
   });
 
   const [result, setResult] = useState<any>(null);
+  const [summary, setSummary] = useState("");
 
   useEffect(() => {
     const saved = localStorage.getItem("stackaudit-form");
@@ -124,6 +134,16 @@ export default function AuditPage() {
               });
 
               setResult(audit);
+
+              if (audit.savings > 0) {
+                setSummary(
+                  "Your current AI stack appears to be overprovisioned for your team size. Several collaboration-tier subscriptions may not be delivering proportional value relative to their monthly cost.",
+                );
+              } else {
+                setSummary(
+                  "Your current stack configuration appears reasonably optimized based on the provided usage and spend patterns.",
+                );
+              }
             }}
             className="mt-4 rounded-2xl bg-black px-6 py-4 text-sm font-medium text-white transition hover:opacity-90"
           >
@@ -131,40 +151,80 @@ export default function AuditPage() {
           </button>
 
           {result && (
-            <div className="mt-10 rounded-3xl border border-zinc-200 bg-zinc-50 p-8">
-              <p className="text-xs uppercase tracking-[0.3em] text-zinc-500">
-                Audit Result
-              </p>
+            <>
+              <div className="mt-10 rounded-3xl border border-zinc-200 bg-zinc-50 p-8">
+                <p className="text-xs uppercase tracking-[0.3em] text-zinc-500">
+                  Audit Result
+                </p>
 
-              <div className="flex items-end gap-2">
-                <h2 className="text-7xl font-semibold tracking-tight text-emerald-600">
-                  ${result.savings}
-                </h2>
+                <div className="mt-6 flex items-end gap-2">
+                  <h2 className="text-7xl font-semibold tracking-tight text-emerald-600">
+                    ${result.savings}
+                  </h2>
 
-                <span className="pb-2 text-2xl text-zinc-500">/mo</span>
+                  <span className="pb-2 text-2xl text-zinc-500">/mo</span>
+                </div>
+
+                <p className="mt-4 text-lg text-zinc-600">
+                  ${result.annualSavings}/year potential savings
+                </p>
+                <div className="mt-10 h-72 rounded-3xl border border-zinc-200 bg-white p-6">
+                  <p className="text-xs uppercase tracking-[0.2em] text-zinc-500">
+                    Spend Comparison
+                  </p>
+
+                  <div className="mt-6 h-52">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart
+                        data={[
+                          {
+                            name: "Current Spend",
+                            value: Number(form.spend),
+                          },
+                          {
+                            name: "Optimized",
+                            value: Number(form.spend) - result.savings,
+                          },
+                        ]}
+                      >
+                        <XAxis dataKey="name" />
+                        <YAxis />
+                        <Tooltip />
+                        <Bar dataKey="value" radius={[12, 12, 0, 0]} />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                </div>
+
+                <div className="mt-8 rounded-3xl border border-emerald-200 bg-white p-8 shadow-sm">
+                  <p className="text-xs uppercase tracking-[0.2em] text-zinc-500">
+                    Recommendation
+                  </p>
+
+                  <h3 className="mt-2 text-2xl font-semibold">
+                    {result.recommendation}
+                  </h3>
+
+                  <p className="mt-2 text-sm text-emerald-600">
+                    Confidence: {result.confidence}
+                  </p>
+
+                  <p className="mt-6 text-base leading-8 text-zinc-600">
+                    {result.reasoning}
+                  </p>
+                </div>
               </div>
 
-              <p className="mt-4 text-lg text-zinc-600">
-                ${result.annualSavings}/year potential savings
-              </p>
-              <div className="mt-8 rounded-3xl border border-emerald-200 bg-white p-8 shadow-sm">
-                <p className="text-xs uppercase tracking-[0.2em] text-zinc-500">
-                  Recommendation
+              <div className="rounded-3xl bg-black p-8 text-white">
+                <p className="text-xs uppercase tracking-[0.3em] text-zinc-400">
+                  AI Summary
                 </p>
 
-                <h3 className="mt-2 text-2xl font-semibold">
-                  {result.recommendation}
-                </h3>
-
-                <p className="mt-2 text-sm text-emerald-600">
-                  Confidence: {result.confidence}
-                </p>
-
-                <p className="mt-6 text-base leading-8 text-zinc-600">
-                  {result.reasoning}
+                <p className="mt-6 text-lg leading-8 text-zinc-200">
+                  {summary}
                 </p>
               </div>
-            </div>
+            </>
           )}
         </div>
       </div>
