@@ -188,14 +188,27 @@ export default function AuditPage() {
                           },
                         ]}
                       >
-                        <XAxis dataKey="name" />
-                        <YAxis />
-                        <Tooltip />
+                        <XAxis
+                          dataKey="name"
+                          axisLine={false}
+                          tickLine={false}
+                        />
+
+                        <YAxis axisLine={false} tickLine={false} />
+
+                        <Tooltip
+                          contentStyle={{
+                            borderRadius: "16px",
+                            border: "1px solid #e4e4e7",
+                            backgroundColor: "#ffffff",
+                          }}
+                        />
 
                         <Bar
                           dataKey="value"
-                          fill="#6ee7b7"
-                          radius={[10, 10, 0, 0]}
+                          fill="#10b981"
+                          radius={[14, 14, 0, 0]}
+                          barSize={48}
                         />
                       </BarChart>
                     </ResponsiveContainer>
