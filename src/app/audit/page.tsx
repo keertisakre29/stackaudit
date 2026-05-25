@@ -12,7 +12,17 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const tools = ["Cursor", "ChatGPT", "Claude", "Gemini", "GitHub Copilot"];
+const tools = [
+  "Cursor",
+  "ChatGPT",
+  "Claude",
+  "Gemini",
+  "GitHub Copilot",
+  "Anthropic API",
+  "OpenAI API",
+  "Windsurf",
+  "v0",
+];
 
 export default function AuditPage() {
   const [form, setForm] = useState({
@@ -149,7 +159,9 @@ export default function AuditPage() {
           >
             Generate Audit
           </button>
-
+          <button className="rounded-xl border border-zinc-200 px-4 py-2 text-sm text-zinc-700 transition hover:bg-zinc-100">
+            + Add Another Tool
+          </button>
           {result && (
             <>
               <div className="mt-10 rounded-3xl border border-zinc-200 bg-zinc-50 p-8">

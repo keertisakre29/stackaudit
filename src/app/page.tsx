@@ -55,7 +55,33 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      <section className="border-b border-zinc-200 bg-white">
+        <div className="mx-auto max-w-6xl px-6 py-16">
+          <div className="grid grid-cols-2 gap-6 rounded-3xl border border-zinc-200 bg-zinc-50 p-8 md:grid-cols-4">
+            <div>
+              <p className="text-3xl font-semibold">1,200+</p>
+              <p className="mt-2 text-sm text-zinc-500">AI audits generated</p>
+            </div>
 
+            <div>
+              <p className="text-3xl font-semibold">$48k+</p>
+              <p className="mt-2 text-sm text-zinc-500">
+                Potential savings identified
+              </p>
+            </div>
+
+            <div>
+              <p className="text-3xl font-semibold">420+</p>
+              <p className="mt-2 text-sm text-zinc-500">Teams analyzed</p>
+            </div>
+
+            <div>
+              <p className="text-3xl font-semibold">9 tools</p>
+              <p className="mt-2 text-sm text-zinc-500">Supported platforms</p>
+            </div>
+          </div>
+        </div>
+      </section>
       <section className="bg-zinc-50 border-b border-zinc-200">
         <div className="mx-auto grid max-w-6xl gap-6 px-6 py-20 md:grid-cols-3">
           {steps.map((step) => (
@@ -170,15 +196,18 @@ export default function HomePage() {
                   lower-cost individual plans a better fit.
                 </p>
 
-                <div className="mt-10 rounded-2xl bg-black p-6 text-white">
-                  <p className="text-sm text-zinc-300">
+                <div className="mt-10 rounded-2xl border border-emerald-200 bg-emerald-50 p-6">
+                  <p className="text-sm text-zinc-700">
                     Teams saving more than $500/month can unlock additional AI
                     infrastructure discounts through Credex.
                   </p>
 
-                  <button className="mt-6 rounded-xl bg-white px-5 py-3 text-sm font-medium text-black">
+                  <Link
+                    href="/audit"
+                    className="mt-6 inline-flex rounded-xl bg-white px-5 py-3 text-sm font-medium text-black transition hover:opacity-90"
+                  >
                     Get Full Audit Report
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
